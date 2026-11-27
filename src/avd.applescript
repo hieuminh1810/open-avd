@@ -5,14 +5,14 @@ if sdkOK is "0" then
 	display alert "Không tìm thấy Android SDK" message "Cần cài Android Studio (SDK ở ~/Library/Android/sdk) và tạo ít nhất 1 AVD."
 	return
 end if
-set resDir to do shell script "{ echo \"$HOME/Applications/Open AVD.app\"; echo '/Applications/Open AVD.app'; mdfind 'kMDItemCFBundleIdentifier == \"com.hieule.open-avd\"'; } | while IFS= read -r a; do if [ -f \"$a/Contents/Resources/list-avds.sh\" ]; then echo \"$a/Contents/Resources/\"; break; fi; done; true"
+set resDir to do shell script "{ p=$(ps -o comm= -p $PPID); echo \"${p%/Contents/MacOS/*}\"; echo \"$HOME/Applications/Open AVD.app\"; echo '/Applications/Open AVD.app'; mdfind 'kMDItemCFBundleIdentifier == \"com.hieule.open-avd\"'; } | while IFS= read -r a; do if [ -f \"$a/Contents/Resources/list-avds.sh\" ]; then echo \"$a/Contents/Resources/\"; break; fi; done; true"
 if resDir is "" then
 	display alert "Không tìm thấy Open AVD.app" message "Hãy chuyển app vào thư mục Applications rồi mở lại."
 	return
 end if
 set appPath to do shell script "cd " & quoted form of resDir & "../.. && pwd"
 set curVer to do shell script "defaults read " & quoted form of (appPath & "/Contents/Info") & " CFBundleShortVersionString 2>/dev/null || echo 0"
-set newVer to do shell script "/bin/bash " & quoted form of (resDir & "update.sh") & " check " & quoted form of curVer
+set newVer to do shell script "f=" & quoted form of (resDir & "update.sh") & "; [ -f \"$f\" ] && /bin/bash \"$f\" check " & quoted form of curVer & "; true"
 if newVer is not "" then
 	set answer to display dialog "Có bản mới v" & newVer & " (bạn đang dùng v" & curVer & ")." with title "Open AVD" buttons {"Để sau", "Cập nhật"} default button "Cập nhật"
 	if button returned of answer is "Cập nhật" then
