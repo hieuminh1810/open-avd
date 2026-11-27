@@ -2,10 +2,13 @@
 
 A small macOS Dock app (Automator) that lists your Android emulators (AVDs) and starts the one you pick.
 
-- Shows a readable name, Android version, API level, Play Store, and which emulator is already running
+- Shows a readable name, Android version, API level, Play Store, and marks running emulators with 🟢
 - Remembers the last AVD you opened
 - Starts emulators with a fixed DNS (`8.8.8.8, 1.1.1.1`) so a Wi-Fi change doesn't break their network
-- "🔄 Sửa mạng emulator" toggles airplane mode on all running emulators to reconnect them
+- The 🛜 network-fix row toggles airplane mode on all running emulators to reconnect them
+- Checks for a new version on launch and updates itself
+
+The app's UI text is in Vietnamese.
 
 ## Install
 
