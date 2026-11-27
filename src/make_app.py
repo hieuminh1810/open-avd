@@ -43,7 +43,11 @@ action = {
     "AMProvides": {"Container": "List", "Types": ["com.apple.applescript.object"]},
     "ActionBundlePath": "/System/Library/Automator/Run AppleScript.action",
     "ActionName": "Run AppleScript",
-    "ActionParameters": {"source": f"on run {{input, parameters}}\n{SCRIPT}\nreturn input\nend run\n"},
+    "ActionParameters": {"source": (
+        "on run {input, parameters}\ntry\n" + SCRIPT +
+        "\non error errMsg number errNum\n"
+        "if errNum is not -128 then display alert \"Open AVD bị lỗi\" message errMsg & \" (\" & errNum & \")\"\n"
+        "end try\nreturn input\nend run\n")},
     "BundleIdentifier": "com.apple.Automator.RunScript",
     "CFBundleVersion": "1.0.2",
     "CanShowSelectedItemsWhenRun": False,

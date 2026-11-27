@@ -5,7 +5,7 @@ if sdkOK is "0" then
 	display alert "Không tìm thấy Android SDK" message "Cần cài Android Studio (SDK ở ~/Library/Android/sdk) và tạo ít nhất 1 AVD."
 	return
 end if
-set resDir to do shell script "for a in \"$HOME/Applications/Open AVD.app\" \"/Applications/Open AVD.app\" $(mdfind 'kMDItemCFBundleIdentifier == \"com.hieule.open-avd\"'); do [ -f \"$a/Contents/Resources/list-avds.sh\" ] && echo \"$a/Contents/Resources/\" && break; done"
+set resDir to do shell script "{ echo \"$HOME/Applications/Open AVD.app\"; echo '/Applications/Open AVD.app'; mdfind 'kMDItemCFBundleIdentifier == \"com.hieule.open-avd\"'; } | while IFS= read -r a; do if [ -f \"$a/Contents/Resources/list-avds.sh\" ]; then echo \"$a/Contents/Resources/\"; break; fi; done; true"
 if resDir is "" then
 	display alert "Không tìm thấy Open AVD.app" message "Hãy chuyển app vào thư mục Applications rồi mở lại."
 	return
