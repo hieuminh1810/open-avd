@@ -10,6 +10,18 @@ if resDir is "" then
 	display alert "Không tìm thấy Open AVD.app" message "Hãy chuyển app vào thư mục Applications rồi mở lại."
 	return
 end if
+set appPath to do shell script "cd " & quoted form of resDir & "../.. && pwd"
+set curVer to do shell script "defaults read " & quoted form of (appPath & "/Contents/Info") & " CFBundleShortVersionString 2>/dev/null || echo 0"
+set newVer to do shell script "/bin/bash " & quoted form of (resDir & "update.sh") & " check " & quoted form of curVer
+if newVer is not "" then
+	set answer to display dialog "Có bản mới v" & newVer & " (bạn đang dùng v" & curVer & ")." with title "Open AVD" buttons {"Để sau", "Cập nhật"} default button "Cập nhật"
+	if button returned of answer is "Cập nhật" then
+		do shell script "t=$(mktemp -d)/update.sh; cp " & quoted form of (resDir & "update.sh") & " \"$t\"; nohup /bin/bash \"$t\" install " & quoted form of appPath & " >/dev/null 2>&1 &"
+		display notification "Đang cập nhật lên v" & newVer & "…" with title "Open AVD"
+		return
+	end if
+end if
+
 set helper to resDir & "list-avds.sh"
 set fixer to resDir & "fix-network.sh"
 set fixLabel to "🔄  Sửa mạng emulator (sau khi đổi wifi)"

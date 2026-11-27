@@ -14,6 +14,6 @@ for n in $("$SDK/emulator/emulator" -list-avds | grep -v '^INFO'); do
     33) v=13 ;; 34) v=14 ;; 35) v=15 ;; 36) v=16 ;; *) v="?" ;;
   esac
   play=""; grep -q '^PlayStore.enabled=true' "$cfg" && play="  ·  Play Store"
-  on=0; mark=""; echo "$running" | grep -qx "$n" && on=1 && mark="   ● đang chạy"
+  on=0; mark=""; echo "$running" | grep -qx "$n" && on=1 && mark="   🟢 đang chạy"
   echo "$n|${disp:-$n}  ·  Android $v (API $api)$play$mark|$on"
 done

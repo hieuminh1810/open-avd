@@ -1,4 +1,6 @@
-import os, plistlib, shutil, uuid
+import os, plistlib, shutil, sys, uuid
+
+VERSION = sys.argv[1] if len(sys.argv) > 1 else "0.0.0"  # e.g. python3 make_app.py 1.2.0
 
 APP = os.path.expanduser("~/Applications/Open AVD.app")
 STUB = "/System/Library/CoreServices/Automator Application Stub.app/Contents/MacOS/Automator Application Stub"
@@ -15,7 +17,7 @@ if icon_bytes:
     open(ICON, "wb").write(icon_bytes)
 else:
     shutil.copy(f"{HERE}/icon/AppIcon.icns", ICON)
-for s in ("list-avds.sh", "fix-network.sh"):
+for s in ("list-avds.sh", "fix-network.sh", "update.sh"):
     shutil.copy(f"{HERE}/{s}", f"{APP}/Contents/Resources/{s}")
     os.chmod(f"{APP}/Contents/Resources/{s}", 0o755)
 
@@ -25,8 +27,8 @@ info = {
     "CFBundleName": "Open AVD",
     "CFBundleIconFile": "AppIcon",
     "CFBundlePackageType": "APPL",
-    "CFBundleShortVersionString": "1.0",
-    "CFBundleVersion": "1",
+    "CFBundleShortVersionString": VERSION,
+    "CFBundleVersion": VERSION,
     "LSMinimumSystemVersion": "10.9",
     "LSUIElement": False,
     "NSAppleEventsUsageDescription": "Open AVD runs an AppleScript.",

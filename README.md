@@ -16,12 +16,16 @@ A small macOS Dock app (Automator) that lists your Android emulators (AVDs) and 
 
 Requires Android Studio with the SDK at `~/Library/Android/sdk` and at least one AVD.
 
-## Build
+## Updates
+
+From v1.1.0 the app checks GitHub when it opens. If a newer release exists it asks to update, then downloads it, replaces itself and reopens.
+
+## Release a new version
 
 ```sh
-cd src && python3 make_app.py          # builds ~/Applications/Open AVD.app
-codesign --force --deep -s - ~/Applications/"Open AVD.app"
-ditto -c -k --keepParent ~/Applications/"Open AVD.app" Open-AVD.zip
+./release.sh 1.2.0 "What changed"   # build, zip, commit, push, create GitHub release
 ```
+
+Local build only: `python3 src/make_app.py 1.2.0` (builds `~/Applications/Open AVD.app`).
 
 Change the icon: `./set-icon.sh <name>` (icons live in `icons/`).
