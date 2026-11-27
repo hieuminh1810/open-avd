@@ -1,6 +1,6 @@
 #!/bin/bash
-# Usage: set-icon.sh <name>   (name = file in ~/.config/open-avd/icons without .icns)
-ICONS="$HOME/.config/open-avd/icons"
+# Usage: set-icon.sh <name>   (name = file in icons/ without .icns)
+ICONS="$(cd "$(dirname "$0")" && pwd)/icons"
 APP="$HOME/Applications/Open AVD.app"
 name=$1
 if [[ -z $name || ! -f "$ICONS/$name.icns" ]]; then
