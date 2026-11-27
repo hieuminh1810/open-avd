@@ -24,7 +24,7 @@ end if
 
 set helper to resDir & "list-avds.sh"
 set fixer to resDir & "fix-network.sh"
-set fixLabel to "🛜  Sửa mạng emulator (sau khi đổi wifi)"
+set fixLabel to "🛜  Sửa mạng emulator"
 set lastFile to homeDir & ".android/open-avd-last"
 
 set rows to paragraphs of (do shell script "/bin/bash " & quoted form of helper)
